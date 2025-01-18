@@ -1,0 +1,9 @@
+{
+  "id": "vulpescloud-proxy",
+  "name": "VulpesCloud-Proxy-Module",
+  "version": "1.0.0",
+  "authors": [
+    "TheCGuy"
+  ],
+  "main": "de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint"
+}

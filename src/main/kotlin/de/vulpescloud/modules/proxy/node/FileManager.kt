@@ -5,6 +5,7 @@ import de.vulpescloud.node.Node
 import de.vulpescloud.node.services.LocalServiceImpl
 import org.slf4j.LoggerFactory
 import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import kotlin.io.path.Path
 
 object FileManager {
@@ -15,7 +16,7 @@ object FileManager {
     fun copyModuleIntoService(service: Service) {
         if (service is LocalServiceImpl) {
             val pluginDir = service.runningDir.resolve("plugins")
-            Files.copy(jarPath, pluginDir.resolve("VulpesCloud-Proxy-Module.jar"))
+            Files.copy(jarPath, pluginDir.resolve("VulpesCloud-Proxy-Module.jar"), StandardCopyOption.REPLACE_EXISTING)
 
             logger.debug("Copying into {}", pluginDir)
         }
@@ -25,7 +26,7 @@ object FileManager {
         if (service is LocalServiceImpl) {
             val pluginDir = service.runningDir.resolve("plugins").resolve("VulpesCloud-Proxy-Module")
             pluginDir.toFile().mkdirs()
-            Files.copy(configPath, pluginDir.resolve("config.json"))
+            Files.copy(configPath, pluginDir.resolve("config.json"), StandardCopyOption.REPLACE_EXISTING)
             logger.debug("Copying config into {}", pluginDir)
         }
     }
