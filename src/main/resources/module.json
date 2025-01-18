@@ -1,0 +1,8 @@
+{
+  "name": "VulpesCloud-Proxy-Module",
+  "description": "Adds Proxy essentials to VulpesCloud Proxy's",
+  "main": "de.vulpescloud.modules.proxy.node.ModuleEntrypoint",
+  "author": "TheCGuy",
+  "website": "https://vulpescloud.de",
+  "version": "1.0.0"
+}
