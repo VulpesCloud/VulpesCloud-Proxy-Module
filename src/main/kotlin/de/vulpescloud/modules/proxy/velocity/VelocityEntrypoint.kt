@@ -7,6 +7,7 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent
 import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.PluginContainer
 import com.velocitypowered.api.proxy.ProxyServer
+import de.vulpescloud.modules.proxy.velocity.manager.MotdManager
 import jakarta.inject.Inject
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.json.JSONObject
@@ -16,11 +17,11 @@ import kotlin.io.path.Path
 @Plugin(id = "vulpescloud-proxy", name = "VulpesCloud-Proxy", authors = ["TheCGuy"])
 @Suppress("unused")
 class VelocityEntrypoint @Inject constructor(
-    val eventManager: EventManager,
-    val proxyServer: ProxyServer,
-    val pluginsContainer: PluginContainer
+    private val eventManager: EventManager,
+    private val proxyServer: ProxyServer,
+    private val pluginsContainer: PluginContainer
 ) {
-    val configJson = JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json")))
+    private val configJson = JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json")))
 
     @Subscribe
     fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
@@ -28,6 +29,7 @@ class VelocityEntrypoint @Inject constructor(
             MiniMessage.miniMessage()
                 .deserialize("<grey>[<aqua>VulpesCloud-Proxy</aqua>]</grey> <yellow>Initializing</yellow>")
         )
+        this.eventManager.register(this, MotdManager(eventManager, proxyServer, pluginsContainer, configJson))
 
     }
 
