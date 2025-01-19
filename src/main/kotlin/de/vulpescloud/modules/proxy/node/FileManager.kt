@@ -9,8 +9,8 @@ import java.nio.file.StandardCopyOption
 import kotlin.io.path.Path
 
 object FileManager {
-    val jarPath = Path("modules/VulpesCloud-Proxy-Module-1.0-SNAPSHOT.jar")
-    val configPath = Path("modules/VulpesCloud-Proxy-Module/config.json")
+    private val jarPath = Path("modules/VulpesCloud-Proxy-Module-1.0-SNAPSHOT.jar")
+    private val configPath = Path("modules/VulpesCloud-Proxy-Module/config.json")
     private val logger = LoggerFactory.getLogger(FileManager::class.java)
 
     fun copyModuleIntoService(service: Service) {
