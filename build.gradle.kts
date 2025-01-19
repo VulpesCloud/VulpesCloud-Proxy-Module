@@ -18,6 +18,7 @@ dependencies {
     compileOnly("de.vulpescloud:VulpesCloud-node:1.0.0-alpha2")
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+    compileOnly("org.json:json:20250107")
 }
 
 kotlin {
