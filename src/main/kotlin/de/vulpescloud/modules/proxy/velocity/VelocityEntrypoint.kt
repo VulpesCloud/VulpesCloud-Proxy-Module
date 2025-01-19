@@ -9,6 +9,9 @@ import com.velocitypowered.api.plugin.PluginContainer
 import com.velocitypowered.api.proxy.ProxyServer
 import jakarta.inject.Inject
 import net.kyori.adventure.text.minimessage.MiniMessage
+import org.json.JSONObject
+import java.nio.file.Files
+import kotlin.io.path.Path
 
 @Plugin(id = "vulpescloud-proxy", name = "VulpesCloud-Proxy", authors = ["TheCGuy"])
 @Suppress("unused")
@@ -17,6 +20,7 @@ class VelocityEntrypoint @Inject constructor(
     val proxyServer: ProxyServer,
     val pluginsContainer: PluginContainer
 ) {
+    val configJson = JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json")))
 
     @Subscribe
     fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
