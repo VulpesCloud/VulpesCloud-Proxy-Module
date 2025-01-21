@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.1.0"
+    id("com.gradleup.shadow") version "8.3.5"
 }
 
 group = "de.vulpescloud"
@@ -24,6 +25,7 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-extensions:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
+    implementation("dev.jorel:commandapi-velocity-shade:9.6.2-SNAPSHOT")
 }
 
 kotlin {
