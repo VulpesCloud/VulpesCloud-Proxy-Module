@@ -9,7 +9,7 @@ import java.nio.file.StandardCopyOption
 import kotlin.io.path.Path
 
 object FileManager {
-    private val jarPath = Path("modules/VulpesCloud-Proxy-Module-1.0-SNAPSHOT.jar")
+    private val jarPath = Path("modules/VulpesCloud-Proxy-Module.jar")
     private val configPath = Path("modules/VulpesCloud-Proxy-Module/config.json")
     private val logger = LoggerFactory.getLogger(FileManager::class.java)
 
