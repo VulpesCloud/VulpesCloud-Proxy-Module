@@ -29,7 +29,10 @@ class VelocityEntrypoint @Inject constructor(
             MiniMessage.miniMessage()
                 .deserialize("<grey>[<aqua>VulpesCloud-Proxy</aqua>]</grey> <yellow>Initializing</yellow>")
         )
-        this.eventManager.register(this, MotdManager(eventManager, proxyServer, pluginsContainer, configJson))
+
+        if (configJson.getJSONObject("motd").getBoolean("enabled")) {
+            this.eventManager.register(this, MotdManager(eventManager, proxyServer, pluginsContainer, configJson))
+        }
 
     }
 

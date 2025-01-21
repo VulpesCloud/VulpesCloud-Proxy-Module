@@ -25,9 +25,14 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-extensions:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
-    implementation("dev.jorel:commandapi-velocity-shade:9.6.2-SNAPSHOT")
+    compileOnly("redis.clients:jedis:5.2.0")
+    // implementation("dev.jorel:commandapi-velocity-shade:9.6.2-SNAPSHOT")
 }
 
 kotlin {
     jvmToolchain(21)
+}
+
+tasks.shadowJar {
+    archiveFileName.set("VulpesCloud-Proxy-Module.jar")
 }

@@ -3,5 +3,10 @@
     "enabled": true,
     "firstLine": "<blue>A <color:#ff6600>VulpesCloud</color> hosted Network!</blue>",
     "secondLine": "<color:#ff6600>Proxy: %proxy%</color>"
+  },
+  "maintenance": {
+    "active": false,
+    "firstLine": "",
+    "secondLine": ""
   }
 }

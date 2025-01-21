@@ -1,6 +1,8 @@
 package de.vulpescloud.modules.proxy.node
 
 import de.vulpescloud.api.modules.VulpesModule
+import de.vulpescloud.modules.proxy.node.commands.ProxyCommand
+import de.vulpescloud.node.Node
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.nio.file.Files
@@ -23,6 +25,8 @@ class ModuleEntrypoint : VulpesModule {
                 Path("modules/VulpesCloud-Proxy-Module/config.json")
             )
         }
+
+        Node.instance.commandProvider.register(ProxyCommand(JSONObject(FileManager.configPath.toFile().readText())))
 
         EventListeners()
     }
