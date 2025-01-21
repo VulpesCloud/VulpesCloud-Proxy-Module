@@ -19,6 +19,11 @@ dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     compileOnly("org.json:json:20250107")
+    compileOnly("org.incendo:cloud-core:2.0.0")
+    compileOnly("org.incendo:cloud-annotations:2.0.0")
+    compileOnly("org.incendo:cloud-kotlin-extensions:2.0.0")
+    compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
+    compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
 }
 
 kotlin {
