@@ -6,7 +6,9 @@
   },
   "maintenance": {
     "active": false,
-    "firstLine": "",
-    "secondLine": ""
+    "firstLine": "<blue>A <color:#ff6600>VulpesCloud</color> hosted Network!</blue>",
+    "secondLine": "<red>MAINTENANCE</red>",
+    "kickMessage": "<gray>The Network is currently in <red>maintenance</red>!</gray>",
+    "bypassPermission": "vulpescloud.proxy.maintenance.bypass"
   }
 }

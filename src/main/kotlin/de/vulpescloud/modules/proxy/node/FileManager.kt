@@ -2,6 +2,7 @@ package de.vulpescloud.modules.proxy.node
 
 import de.vulpescloud.api.services.Service
 import de.vulpescloud.api.services.ServiceFilters
+import de.vulpescloud.api.version.VersionType
 import de.vulpescloud.modules.proxy.common.ProxyModuleChannels
 import de.vulpescloud.node.Node
 import de.vulpescloud.node.services.LocalServiceImpl
@@ -36,7 +37,7 @@ object FileManager {
 
     fun updateAndPushConfig(config: JSONObject) {
         Files.writeString(configPath, config.toString(4))
-        Node.instance.serviceProvider.findServicesByFilter(ServiceFilters.PROXIES)?.forEach {
+        Node.instance.serviceProvider.services().filter { it.task.version().versionType == VersionType.PROXY.name }.forEach {
             copyConfigIntoService(it)
             logger.debug("Updated config in {}", it.name())
         }
