@@ -8,10 +8,10 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import kotlin.jvm.optionals.getOrNull
 
 class MotdManager {
-    private val configJSON = VelocityEntrypoint.instance.configJson
 
     @Subscribe
     fun onProxyPingEvent(event: ProxyPingEvent) {
+        val configJSON = VelocityEntrypoint.instance.configJson
         val motdJson = configJSON.getJSONObject("motd")
         val maintenanceJson = configJSON.getJSONObject("maintenance")
 

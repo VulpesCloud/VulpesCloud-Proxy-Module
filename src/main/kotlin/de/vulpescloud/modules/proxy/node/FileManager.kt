@@ -18,7 +18,7 @@ object FileManager {
     private val logger = LoggerFactory.getLogger(FileManager::class.java)
 
     fun copyModuleIntoService(service: Service) {
-        if (service is LocalServiceImpl) {
+        if (service is LocalServiceImpl && service.version()!!.versionType == VersionType.PROXY) {
             val pluginDir = service.runningDir.resolve("plugins")
             Files.copy(jarPath, pluginDir.resolve("VulpesCloud-Proxy-Module.jar"), StandardCopyOption.REPLACE_EXISTING)
 
@@ -27,7 +27,7 @@ object FileManager {
     }
 
     fun copyConfigIntoService(service: Service) {
-        if (service is LocalServiceImpl) {
+        if (service is LocalServiceImpl && service.version()!!.versionType == VersionType.PROXY) {
             val pluginDir = service.runningDir.resolve("plugins").resolve("VulpesCloud-Proxy-Module")
             pluginDir.toFile().mkdirs()
             Files.copy(configPath, pluginDir.resolve("config.json"), StandardCopyOption.REPLACE_EXISTING)
@@ -37,9 +37,10 @@ object FileManager {
 
     fun updateAndPushConfig(config: JSONObject) {
         Files.writeString(configPath, config.toString(4))
-        Node.instance.serviceProvider.services().filter { it.task.version().versionType == VersionType.PROXY.name }.forEach {
-            copyConfigIntoService(it)
+
+        Node.instance.serviceProvider.localServices().filter { it.version()!!.versionType == VersionType.PROXY }.forEach {
             logger.debug("Updated config in {}", it.name())
+            copyConfigIntoService(it)
         }
         val message = JSONObject()
             .put("action", "PROXY_MODULE")

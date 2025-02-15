@@ -6,10 +6,9 @@ import de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
 import net.kyori.adventure.text.minimessage.MiniMessage
 
 class PlayerJoinListener {
-    private val jsonConfig = VelocityEntrypoint.instance.configJson
-
     @Subscribe
     fun onPlayerJoin(event: PostLoginEvent) {
+        val jsonConfig = VelocityEntrypoint.instance.configJson
         val maintenanceJSON = jsonConfig.getJSONObject("maintenance")
         if (maintenanceJSON.getBoolean("active")) {
             if (!event.player.hasPermission(maintenanceJSON.getString("bypassPermission"))) {

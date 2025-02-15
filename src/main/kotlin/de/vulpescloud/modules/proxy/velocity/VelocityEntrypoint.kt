@@ -19,6 +19,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import org.json.JSONObject
 import java.nio.file.Files
 import kotlin.io.path.Path
+import kotlin.io.path.absolutePathString
 
 @Plugin(id = "vulpescloud-proxy", name = "VulpesCloud-Proxy", authors = ["TheCGuy"])
 @Suppress("unused")
@@ -27,7 +28,7 @@ class VelocityEntrypoint @Inject constructor(
     private val proxyServer: ProxyServer,
     private val pluginsContainer: PluginContainer
 ) {
-    var configJson = JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json")))
+    var configJson = JSONObject()
         private set
 
     @Subscribe
@@ -37,6 +38,9 @@ class VelocityEntrypoint @Inject constructor(
             MiniMessage.miniMessage()
                 .deserialize("<grey>[<aqua>VulpesCloud-Proxy</aqua>]</grey> <yellow>Initializing</yellow>")
         )
+
+        this.configJson = JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json")))
+
         this.eventManager.register(this, MotdManager())
         this.eventManager.register(this, PlayerJoinListener())
         this.listenOnRedisChannels()
@@ -52,11 +56,22 @@ class VelocityEntrypoint @Inject constructor(
     private fun listenOnRedisChannels() {
         val manager = Wrapper.instance.getRC()?.let { RedisManager(it.getJedisPool()) }
         manager?.subscribe(listOf(ProxyModuleChannels.VULPESCLOUD_MODULES_PROXY.name)) { _, channel, message ->
+            proxyServer.consoleCommandSource.sendMessage(
+                MiniMessage.miniMessage().deserialize("RELOAD OF CONFIG________________________________----")
+            )
+            proxyServer.consoleCommandSource.sendMessage(
+                MiniMessage.miniMessage().deserialize(Path("plugins/VulpesCloud-Proxy-Module/config.json").absolutePathString())
+            )
+
             val json = RedisJsonParser.convert(message!!)
 
-            if (json.getString("action") == "PROXY_MODULE" && json.getString("task") == "REFRESH_CONFIG") {
+            //if (json.getString("action") == "PROXY_MODULE" && json.getString("task") == "REFRESH_CONFIG") {
                 this.configJson = JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json")))
-            }
+            //}
+
+            proxyServer.consoleCommandSource.sendMessage(
+                MiniMessage.miniMessage().deserialize(JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json"))).toString(4))
+            )
         }
     }
 
