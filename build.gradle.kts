@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     compileOnly("de.vulpescloud:VulpesCloud-wrapper:1.0.0")
-    compileOnly("de.vulpescloud:VulpesCloud-bridge:1.0.0-alpha3")
+    compileOnly("de.vulpescloud:VulpesCloud-bridge:1.0.0")
     compileOnly("de.vulpescloud:VulpesCloud-api:1.0.0")
     compileOnly("de.vulpescloud:VulpesCloud-node:1.0.0")
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
