@@ -17,12 +17,12 @@ class MotdManager {
 
         if (motdJson.getBoolean("enabled") && !maintenanceJson.getBoolean("active")) {
             val fistLine = motdJson.getString("firstLine")
-                .replace("%proxy%", Wrapper.instance.service.name)
+                .replace("%proxy%", Wrapper.instance.serviceName)
                 .replace("%playerCount%", "${event.ping.players.getOrNull()?.online ?: 0}")
                 .replace("%playerMax%", "${event.ping.players.getOrNull()?.max ?: 0}")
 
             val secondLine = motdJson.getString("secondLine")
-                .replace("%proxy%", Wrapper.instance.service.name)
+                .replace("%proxy%", Wrapper.instance.serviceName)
                 .replace("%playerCount%", "${event.ping.players.getOrNull()?.online ?: 0}")
                 .replace("%playerMax%", "${event.ping.players.getOrNull()?.max ?: 0}")
 
@@ -38,12 +38,12 @@ class MotdManager {
             event.ping = builder.build()
         } else if (maintenanceJson.getBoolean("active")) {
             val fistLine = maintenanceJson.getString("firstLine")
-                .replace("%proxy%", Wrapper.instance.service.name)
+                .replace("%proxy%", Wrapper.instance.serviceName)
                 .replace("%playerCount%", "${event.ping.players.getOrNull()?.online ?: 0}")
                 .replace("%playerMax%", "${event.ping.players.getOrNull()?.max ?: 0}")
 
             val secondLine = maintenanceJson.getString("secondLine")
-                .replace("%proxy%", Wrapper.instance.service.name)
+                .replace("%proxy%", Wrapper.instance.serviceName)
                 .replace("%playerCount%", "${event.ping.players.getOrNull()?.online ?: 0}")
                 .replace("%playerMax%", "${event.ping.players.getOrNull()?.max ?: 0}")
 
