@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 import kotlin.io.path.Path
+import kotlin.math.log
 
 @Suppress("unused")
 class EventListeners {
@@ -17,6 +18,7 @@ class EventListeners {
 
     @EventListener
     fun onServiceStateChangeEvent(event: ServiceStateChangeEvent) {
+        logger.info("Triggered ServiceStateChangeEvent, Service: ${event.service.name}, State: ${event.newState}, Node: ${event.service.runningNode.name}, Local Node: ${clusterProvider.localNode().name}")
         if (
             event.service.runningNode.name == clusterProvider.localNode().name &&
                 event.newState == ServiceStates.PREPARED

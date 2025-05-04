@@ -33,7 +33,7 @@ class ModuleEntrypoint : VulpesModule {
             "maintenance.kickMessage",
             "<gray>The Network is currently in <red>maintenance</red>!</gray>",
         )
-        config.getEntry("mainenance.bypassPermission", "vulpescloud.proxy.maintenance.bypass")
+        config.getEntry("maintenance.bypassPermission", "vulpescloud.proxy.maintenance.bypass")
 
         config.publish()
 
