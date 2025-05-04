@@ -7,43 +7,37 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent
 import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.PluginContainer
 import com.velocitypowered.api.proxy.ProxyServer
-import de.vulpescloud.modules.proxy.common.ProxyModuleChannels
-import de.vulpescloud.modules.proxy.node.commands.ProxyCommand
+import de.vulpescloud.api.virtualconfig.VirtualConfig
 import de.vulpescloud.modules.proxy.velocity.listener.PlayerJoinListener
 import de.vulpescloud.modules.proxy.velocity.manager.MotdManager
-import de.vulpescloud.wrapper.Wrapper
-import de.vulpescloud.wrapper.redis.RedisJsonParser
-import de.vulpescloud.wrapper.redis.RedisManager
 import jakarta.inject.Inject
 import net.kyori.adventure.text.minimessage.MiniMessage
-import org.json.JSONObject
-import java.nio.file.Files
-import kotlin.io.path.Path
-import kotlin.io.path.absolutePathString
 
-@Plugin(id = "vulpescloud-proxy", name = "VulpesCloud-Proxy", authors = ["TheCGuy"])
+@Plugin(id = "vulpescloud-proxy-module", name = "VulpesCloud-Proxy-Module", authors = ["TheCGuy"])
 @Suppress("unused")
-class VelocityEntrypoint @Inject constructor(
+class VelocityEntrypoint
+@Inject
+constructor(
     private val eventManager: EventManager,
     private val proxyServer: ProxyServer,
-    private val pluginsContainer: PluginContainer
+    private val pluginsContainer: PluginContainer,
 ) {
-    var configJson = JSONObject()
-        private set
+    lateinit var config: VirtualConfig
+    private lateinit var redisChannelListener: RedisChannelListener
 
     @Subscribe
     fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
         instance = this
         proxyServer.consoleCommandSource.sendMessage(
             MiniMessage.miniMessage()
-                .deserialize("<grey>[<aqua>VulpesCloud-Proxy</aqua>]</grey> <yellow>Initializing</yellow>")
+                .deserialize(
+                    "<grey>[<aqua>VulpesCloud-Proxy-Module</aqua>]</grey> <yellow>Initializing</yellow>"
+                )
         )
-
-        this.configJson = JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json")))
 
         this.eventManager.register(this, MotdManager())
         this.eventManager.register(this, PlayerJoinListener())
-        this.listenOnRedisChannels()
+        this.redisChannelListener = RedisChannelListener(config, proxyServer)
     }
 
     @Subscribe
@@ -53,30 +47,7 @@ class VelocityEntrypoint @Inject constructor(
         )
     }
 
-    private fun listenOnRedisChannels() {
-        val manager = Wrapper.instance.getRC()?.let { RedisManager(it.getJedisPool()) }
-        manager?.subscribe(listOf(ProxyModuleChannels.VULPESCLOUD_MODULES_PROXY.name)) { _, channel, message ->
-            proxyServer.consoleCommandSource.sendMessage(
-                MiniMessage.miniMessage().deserialize("RELOAD OF CONFIG________________________________----")
-            )
-            proxyServer.consoleCommandSource.sendMessage(
-                MiniMessage.miniMessage().deserialize(Path("plugins/VulpesCloud-Proxy-Module/config.json").absolutePathString())
-            )
-
-            val json = RedisJsonParser.convert(message!!)
-
-            //if (json.getString("action") == "PROXY_MODULE" && json.getString("task") == "REFRESH_CONFIG") {
-                this.configJson = JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json")))
-            //}
-
-            proxyServer.consoleCommandSource.sendMessage(
-                MiniMessage.miniMessage().deserialize(JSONObject(Files.readString(Path("plugins/VulpesCloud-Proxy-Module/config.json"))).toString(4))
-            )
-        }
-    }
-
     companion object {
         lateinit var instance: VelocityEntrypoint
     }
-
 }

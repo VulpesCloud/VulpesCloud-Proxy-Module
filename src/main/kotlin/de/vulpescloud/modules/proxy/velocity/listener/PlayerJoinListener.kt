@@ -8,13 +8,14 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 class PlayerJoinListener {
     @Subscribe
     fun onPlayerJoin(event: PostLoginEvent) {
-        val jsonConfig = VelocityEntrypoint.instance.configJson
-        val maintenanceJSON = jsonConfig.getJSONObject("maintenance")
-        if (maintenanceJSON.getBoolean("active")) {
-            if (!event.player.hasPermission(maintenanceJSON.getString("bypassPermission"))) {
-                event.player.disconnect(MiniMessage.miniMessage().deserialize(maintenanceJSON.getString("kickMessage")))
+        val config = VelocityEntrypoint.instance.config
+        if (config.getEntry("maintenance.active", false)) {
+            if (!event.player.hasPermission(config.getEntry("maintenance.bypassPermission", ""))) {
+                event.player.disconnect(
+                    MiniMessage.miniMessage()
+                        .deserialize(config.getEntry("maintenance.kickMessage", ""))
+                )
             }
         }
     }
-
 }

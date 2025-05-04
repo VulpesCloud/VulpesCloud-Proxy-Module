@@ -1,32 +1,43 @@
 package de.vulpescloud.modules.proxy.node
 
-import de.vulpescloud.api.modules.VulpesModule
+import de.vulpescloud.api.module.VulpesModule
+import de.vulpescloud.api.virtualconfig.VirtualConfig
 import de.vulpescloud.modules.proxy.node.commands.ProxyCommand
-import de.vulpescloud.node.Node
-import org.json.JSONObject
+import de.vulpescloud.node.VulpesNode
 import org.slf4j.LoggerFactory
-import java.nio.file.Files
-import java.util.Objects
-import kotlin.io.path.Path
 
 class ModuleEntrypoint : VulpesModule {
     private val logger = LoggerFactory.getLogger(ModuleEntrypoint::class.java)
+    private lateinit var config: VirtualConfig
 
-    override fun disable() {
+    override fun onDisable() {
         logger.info("Bye Bye from ProxyModule")
     }
 
-    override fun enable() {
-        if (!Path("modules/VulpesCloud-Proxy-Module/config.json").toFile().exists()) {
-            logger.debug("Copying defualt config")
-            Path("modules/VulpesCloud-Proxy-Module").toFile().mkdirs()
-            Files.copy(
-                Objects.requireNonNull(this::class.java.classLoader.getResourceAsStream("config.json")),
-                Path("modules/VulpesCloud-Proxy-Module/config.json")
-            )
-        }
+    override fun onEnable() {
+        config = VirtualConfig("Proxy-Module")
 
-        Node.instance.commandProvider.register(ProxyCommand(JSONObject(FileManager.configPath.toFile().readText())))
+        config.getEntry("motd.enabled", true)
+        config.getEntry(
+            "motd.firstLine",
+            "<blue>A <color:#ff6600>VulpesCloud</color> hosted Network!</blue>",
+        )
+        config.getEntry("motd.secondLine", "<color:#ff6600>Proxy: %proxy%</color>")
+        config.getEntry("maintenance.active", false)
+        config.getEntry(
+            "maintenance.firstLine",
+            "<blue>A <color:#ff6600>VulpesCloud</color> hosted Network!</blue>",
+        )
+        config.getEntry("maintenance.secondLine", "<red>MAINTENANCE</red>")
+        config.getEntry(
+            "maintenance.kickMessage",
+            "<gray>The Network is currently in <red>maintenance</red>!</gray>",
+        )
+        config.getEntry("mainenance.bypassPermission", "vulpescloud.proxy.maintenance.bypass")
+
+        config.publish()
+
+        VulpesNode.commandProvider.register(ProxyCommand(config))
 
         EventListeners()
     }

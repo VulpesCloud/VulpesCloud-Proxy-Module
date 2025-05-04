@@ -1,24 +1,32 @@
 package de.vulpescloud.modules.proxy.node
 
-import de.vulpescloud.api.event.events.service.ServicePrepareEvent
-import de.vulpescloud.modules.proxy.node.FileManager.copyConfigIntoService
-import de.vulpescloud.modules.proxy.node.FileManager.copyModuleIntoService
-import de.vulpescloud.node.Node
+import de.vulpescloud.api.event.EventListener
+import de.vulpescloud.api.event.events.service.ServiceStateChangeEvent
+import de.vulpescloud.api.service.ServiceStates
+import de.vulpescloud.node.VulpesNode
 import org.slf4j.LoggerFactory
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+import kotlin.io.path.Path
 
 @Suppress("unused")
 class EventListeners {
-    private val eventManager = Node.instance.eventManager
     private val logger = LoggerFactory.getLogger(EventListeners::class.java)
+    private val clusterProvider = VulpesNode.clusterProvider
+    private val jarPath = Path("modules/VulpesCloud-Proxy-Module.jar")
 
-    val onServicePrepareEvent = eventManager.listen<ServicePrepareEvent> {
-        logger.debug("&mProxy-Module &f> &7 Received ServicePrepareEvent")
-        logger.info("&mProxy-Module &f> &7 Starting Copy of Proxy Module for &c${it.service.name()}")
-        logger.debug("&mProxy-Module &f> &7 Copying Module into Plugins folder of &c${it.service.name()}")
-        copyModuleIntoService(it.service)
-        logger.debug("&mProxy-Module &f> &7 Copying Config into Plugins folder of &c${it.service.name()}")
-        copyConfigIntoService(it.service)
-        logger.info("&mProxy-Module &f> &7 Finished Copying of Proxy Module for &c${it.service.name()}")
+    @EventListener
+    fun onServiceStateChangeEvent(event: ServiceStateChangeEvent) {
+        if (
+            event.service.runningNode.name == clusterProvider.localNode().name &&
+                event.newState == ServiceStates.PREPARED
+        ) {
+            val pluginDir = event.service.path().resolve("plugins")
+            Files.copy(
+                jarPath,
+                pluginDir.resolve("VulpesCloud-Proxy-Module.jar"),
+                StandardCopyOption.REPLACE_EXISTING,
+            )
+        }
     }
-
 }

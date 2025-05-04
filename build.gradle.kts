@@ -13,10 +13,11 @@ repositories {
 }
 
 dependencies {
-    compileOnly("de.vulpescloud:VulpesCloud-wrapper:1.0.0")
-    compileOnly("de.vulpescloud:VulpesCloud-bridge:1.0.0")
-    compileOnly("de.vulpescloud:VulpesCloud-api:1.0.0")
-    compileOnly("de.vulpescloud:VulpesCloud-node:1.0.0")
+    compileOnly("de.vulpescloud:VulpesCloud-wrapper:2.0.0-ALPHA")
+    compileOnly("de.vulpescloud:VulpesCloud-bridge:2.0.0-ALPHA")
+    compileOnly("de.vulpescloud:VulpesCloud-api:2.0.0-ALPHA")
+    compileOnly("de.vulpescloud:VulpesCloud-node:2.0.0-ALPHA")
+    compileOnly("de.vulpescloud:JedisWrapper:1.1.0")
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     compileOnly("org.json:json:20250107")
@@ -25,8 +26,7 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-extensions:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
-    compileOnly("redis.clients:jedis:5.2.0")
-    // implementation("dev.jorel:commandapi-velocity-shade:9.6.2-SNAPSHOT")
+    implementation("io.insert-koin:koin-core:4.0.3")
 }
 
 kotlin {
