@@ -27,6 +27,7 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
     implementation("io.insert-koin:koin-core:4.0.3")
+    implementation("com.electronwill.night-config:json:3.6.0")
 }
 
 kotlin {
