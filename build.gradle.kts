@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.vulpescloud"
-version = "1.0-SNAPSHOT"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.electronwill.night-config:json:3.6.0")
     compileOnly("de.vulpescloud:VulpesCloud-wrapper:2.0.0-ALPHA")
     compileOnly("de.vulpescloud:VulpesCloud-bridge:2.0.0-ALPHA")
     compileOnly("de.vulpescloud:VulpesCloud-api:2.0.0-ALPHA")
@@ -27,7 +28,6 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
     implementation("io.insert-koin:koin-core:4.0.3")
-    implementation("com.electronwill.night-config:json:3.6.0")
 }
 
 kotlin {
