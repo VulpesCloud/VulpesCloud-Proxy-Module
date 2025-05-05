@@ -22,32 +22,31 @@ constructor(
     private val proxyServer: ProxyServer,
     private val pluginsContainer: PluginContainer,
 ) {
-    lateinit var config: VirtualConfig
-    private lateinit var redisChannelListener: RedisChannelListener
+  lateinit var config: VirtualConfig
+  private lateinit var redisChannelListener: RedisChannelListener
 
-    @Subscribe
-    fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
-        instance = this
-        proxyServer.consoleCommandSource.sendMessage(
-            MiniMessage.miniMessage()
-                .deserialize(
-                    "<grey>[<aqua>VulpesCloud-Proxy-Module</aqua>]</grey> <yellow>Initializing</yellow>"
-                )
-        )
+  @Subscribe
+  fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
+    instance = this
+    proxyServer.consoleCommandSource.sendMessage(
+        MiniMessage.miniMessage()
+            .deserialize(
+                "<grey>[<aqua>VulpesCloud-Proxy-Module</aqua>]</grey> <yellow>Initializing</yellow>"))
 
-        this.eventManager.register(this, MotdManager())
-        this.eventManager.register(this, PlayerJoinListener())
-        this.redisChannelListener = RedisChannelListener(config, proxyServer)
-    }
+    config = VirtualConfig("Proxy-Module")
 
-    @Subscribe
-    fun onProxyShutdownEvent(event: ProxyShutdownEvent) {
-        proxyServer.consoleCommandSource.sendMessage(
-            MiniMessage.miniMessage().deserialize("<gray>Stopping VulpesCloud-Connector!</gray>")
-        )
-    }
+    this.eventManager.register(this, MotdManager())
+    this.eventManager.register(this, PlayerJoinListener())
+    this.redisChannelListener = RedisChannelListener(config, proxyServer)
+  }
 
-    companion object {
-        lateinit var instance: VelocityEntrypoint
-    }
+  @Subscribe
+  fun onProxyShutdownEvent(event: ProxyShutdownEvent) {
+    proxyServer.consoleCommandSource.sendMessage(
+        MiniMessage.miniMessage().deserialize("<gray>Stopping VulpesCloud-Connector!</gray>"))
+  }
+
+  companion object {
+    lateinit var instance: VelocityEntrypoint
+  }
 }
