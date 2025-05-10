@@ -12,7 +12,7 @@ class RedisChannelListener(
 ) : ChannelListener(ProxyModuleChannels.VULPESCLOUD_MODULES_PROXY.name) {
 
     override fun onMessage(message: String) {
-        if (message == "CONFIG:UPDATED") {
+        if (message.contains("CONFIG:UPDATED")) {
             proxyServer.consoleCommandSource.sendMessage(
                 MiniMessage.miniMessage()
                     .deserialize(
