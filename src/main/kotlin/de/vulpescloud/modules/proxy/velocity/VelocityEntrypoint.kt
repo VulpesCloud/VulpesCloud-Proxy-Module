@@ -36,7 +36,7 @@ constructor(
     config = VirtualConfig("Proxy-Module")
 
     this.eventManager.register(this, MotdManager())
-    this.eventManager.register(this, PlayerJoinListener())
+    this.eventManager.register(this, PlayerJoinListener(proxyServer))
     this.redisChannelListener = RedisChannelListener(config, proxyServer)
   }
 
