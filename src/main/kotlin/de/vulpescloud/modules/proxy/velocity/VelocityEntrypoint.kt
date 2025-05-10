@@ -22,31 +22,36 @@ constructor(
     private val proxyServer: ProxyServer,
     private val pluginsContainer: PluginContainer,
 ) {
-  lateinit var config: VirtualConfig
-  private lateinit var redisChannelListener: RedisChannelListener
+    lateinit var config: VirtualConfig
+    private lateinit var redisChannelListener: RedisChannelListener
 
-  @Subscribe
-  fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
-    instance = this
-    proxyServer.consoleCommandSource.sendMessage(
-        MiniMessage.miniMessage()
-            .deserialize(
-                "<grey>[<aqua>VulpesCloud-Proxy-Module</aqua>]</grey> <yellow>Initializing</yellow>"))
+    @Subscribe
+    fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
+        instance = this
+        proxyServer.consoleCommandSource.sendMessage(
+            MiniMessage.miniMessage()
+                .deserialize(
+                    "<grey>[<aqua>VulpesCloud-Proxy-Module</aqua>]</grey> <yellow>Initializing</yellow>"
+                )
+        )
 
-    config = VirtualConfig("Proxy-Module")
+        config = VirtualConfig("Proxy-Module")
 
-    this.eventManager.register(this, MotdManager())
-    this.eventManager.register(this, PlayerJoinListener(proxyServer))
-    this.redisChannelListener = RedisChannelListener(config, proxyServer)
-  }
+        this.eventManager.register(this, MotdManager())
+        this.eventManager.register(this, PlayerJoinListener(proxyServer))
+        this.redisChannelListener = RedisChannelListener(config, proxyServer)
+    }
 
-  @Subscribe
-  fun onProxyShutdownEvent(event: ProxyShutdownEvent) {
-    proxyServer.consoleCommandSource.sendMessage(
-        MiniMessage.miniMessage().deserialize("<gray>Stopping VulpesCloud-Connector!</gray>"))
-  }
+    @Subscribe
+    fun onProxyShutdownEvent(event: ProxyShutdownEvent) {
+        proxyServer.consoleCommandSource.sendMessage(
+            MiniMessage.miniMessage().deserialize("<gray>Stopping VulpesCloud-Connector!</gray>")
+        )
 
-  companion object {
-    lateinit var instance: VelocityEntrypoint
-  }
+        config.close()
+    }
+
+    companion object {
+        lateinit var instance: VelocityEntrypoint
+    }
 }

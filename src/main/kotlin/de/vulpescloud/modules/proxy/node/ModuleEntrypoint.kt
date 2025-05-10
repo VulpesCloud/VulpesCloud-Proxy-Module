@@ -4,14 +4,12 @@ import de.vulpescloud.api.module.VulpesModule
 import de.vulpescloud.api.virtualconfig.VirtualConfig
 import de.vulpescloud.modules.proxy.node.commands.ProxyCommand
 import de.vulpescloud.node.VulpesNode
-import org.slf4j.LoggerFactory
 
 class ModuleEntrypoint : VulpesModule {
-    private val logger = LoggerFactory.getLogger(ModuleEntrypoint::class.java)
     private lateinit var config: VirtualConfig
 
     override fun onDisable() {
-        logger.info("Bye Bye from ProxyModule")
+        config.close()
     }
 
     override fun onEnable() {
