@@ -35,6 +35,8 @@ class ModuleEntrypoint : VulpesModule {
         )
         config.getEntry("maintenance.bypassPermission", "vulpescloud.proxy.maintenance.bypass")
 
+        config.getEntry("proxy.fullKickMessage", "<red>Proxy is full!</red>")
+
         config.publish()
 
         VulpesNode.commandProvider.register(ProxyCommand(config))
