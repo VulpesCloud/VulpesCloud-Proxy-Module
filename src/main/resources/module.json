@@ -4,5 +4,10 @@
   "main": "de.vulpescloud.modules.proxy.node.ModuleEntrypoint",
   "authors": ["TheCGuy"],
   "website": "https://vulpescloud.de",
-  "version": "1.1.0"
+  "version": "1.1.0",
+  "headNodeOnly": false,
+  "copyToServices": true,
+  "platforms": [
+    "velocity"
+  ]
 }

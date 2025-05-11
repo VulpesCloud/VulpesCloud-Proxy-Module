@@ -38,6 +38,6 @@ class ModuleEntrypoint : VulpesModule {
         config.publish()
 
         VulpesNode.commandProvider.register(ProxyCommand(config))
-        VulpesNode.eventManager.registerListener(EventListeners())
+        // VulpesNode.eventManager.registerListener(EventListeners())
     }
 }
