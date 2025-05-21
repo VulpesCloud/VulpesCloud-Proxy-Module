@@ -23,7 +23,7 @@ constructor(
     private val pluginsContainer: PluginContainer,
 ) {
     lateinit var config: VirtualConfig
-    private lateinit var redisChannelListener: RedisChannelListener
+    // private lateinit var redisChannelListener: RedisChannelListener
 
     @Subscribe
     fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
@@ -35,11 +35,13 @@ constructor(
                 )
         )
 
-        config = VirtualConfig("Proxy-Module")
+        config = VirtualConfig("Proxy-Module", "The Confiuration for the Proxy Module")
+
+        config.init()
 
         this.eventManager.register(this, MotdManager())
         this.eventManager.register(this, PlayerJoinListener(proxyServer))
-        this.redisChannelListener = RedisChannelListener(config, proxyServer)
+        // this.redisChannelListener = RedisChannelListener(config, proxyServer)
     }
 
     @Subscribe

@@ -13,7 +13,9 @@ class ModuleEntrypoint : VulpesModule {
     }
 
     override fun onEnable() {
-        config = VirtualConfig("Proxy-Module")
+        config = VirtualConfig("Proxy-Module", "The Confiuration for the Proxy Module")
+
+        config.init()
 
         config.getEntry("motd.enabled", true)
         config.getEntry(
@@ -38,6 +40,5 @@ class ModuleEntrypoint : VulpesModule {
         config.publish()
 
         VulpesNode.commandProvider.register(ProxyCommand(config))
-        // VulpesNode.eventManager.registerListener(EventListeners())
     }
 }
