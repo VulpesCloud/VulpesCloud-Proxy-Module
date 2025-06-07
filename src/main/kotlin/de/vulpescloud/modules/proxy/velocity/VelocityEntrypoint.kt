@@ -8,6 +8,7 @@ import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.PluginContainer
 import com.velocitypowered.api.proxy.ProxyServer
 import de.vulpescloud.api.virtualconfig.VirtualConfig
+import de.vulpescloud.api.virtualconfig.VirtualConfigProvider
 import de.vulpescloud.modules.proxy.velocity.listener.PlayerJoinListener
 import de.vulpescloud.modules.proxy.velocity.manager.MotdManager
 import jakarta.inject.Inject
@@ -23,7 +24,6 @@ constructor(
     private val pluginsContainer: PluginContainer,
 ) {
     lateinit var config: VirtualConfig
-    // private lateinit var redisChannelListener: RedisChannelListener
 
     @Subscribe
     fun onProxyInitializationEvent(event: ProxyInitializeEvent) {
@@ -35,13 +35,10 @@ constructor(
                 )
         )
 
-        config = VirtualConfig("Proxy-Module", "The Confiuration for the Proxy Module")
-
-        config.init()
+        config = VirtualConfigProvider.getConfig("Proxy-Module", "The Configuration for the Proxy Module!")
 
         this.eventManager.register(this, MotdManager())
         this.eventManager.register(this, PlayerJoinListener(proxyServer))
-        // this.redisChannelListener = RedisChannelListener(config, proxyServer)
     }
 
     @Subscribe

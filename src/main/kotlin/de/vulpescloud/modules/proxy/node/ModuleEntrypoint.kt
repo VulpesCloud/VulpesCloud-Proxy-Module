@@ -2,6 +2,7 @@ package de.vulpescloud.modules.proxy.node
 
 import de.vulpescloud.api.module.VulpesModule
 import de.vulpescloud.api.virtualconfig.VirtualConfig
+import de.vulpescloud.api.virtualconfig.VirtualConfigProvider
 import de.vulpescloud.modules.proxy.node.commands.ProxyCommand
 import de.vulpescloud.node.VulpesNode
 
@@ -13,9 +14,7 @@ class ModuleEntrypoint : VulpesModule {
     }
 
     override fun onEnable() {
-        config = VirtualConfig("Proxy-Module", "The Confiuration for the Proxy Module")
-
-        config.init()
+        config = VirtualConfigProvider.getConfig("Proxy-Module", "The Configuration for the Proxy Module!")
 
         config.getEntry("motd.enabled", true)
         config.getEntry(
