@@ -28,6 +28,9 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
     implementation("io.insert-koin:koin-core:4.0.3")
+
+    compileOnly("org.jetbrains.exposed:exposed-core:1.0.0-beta-2")
+    compileOnly("org.jetbrains.exposed:exposed-jdbc:1.0.0-beta-2")
 }
 
 kotlin {

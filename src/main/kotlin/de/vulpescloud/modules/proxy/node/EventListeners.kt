@@ -18,15 +18,15 @@ class EventListeners {
     @EventListener
     fun onServiceStateChangeEvent(event: ServiceStateChangeEvent) {
         if (
-            event.service.runningNode.name == clusterProvider.localNode().name &&
+            event.serviceInfo.runningNode.name == clusterProvider.localNode().name &&
                 event.newState == ServiceStates.PREPARED
         ) {
-            val pluginDir = event.service.path().resolve("plugins")
-            Files.copy(
-                jarPath,
-                pluginDir.resolve("VulpesCloud-Proxy-Module.jar"),
-                StandardCopyOption.REPLACE_EXISTING,
-            )
+            // val pluginDir = event.serviceInfo.path().resolve("plugins")
+//            Files.copy(
+//                jarPath,
+//                pluginDir.resolve("VulpesCloud-Proxy-Module.jar"),
+//                StandardCopyOption.REPLACE_EXISTING,
+//            )
         }
     }
 }
