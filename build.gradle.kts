@@ -25,7 +25,7 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-extensions:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
-    compileOnly("redis.clients:jedis:6.0.0")
+    compileOnly("redis.clients:jedis:6.2.0")
     // implementation("dev.jorel:commandapi-velocity-shade:9.6.2-SNAPSHOT")
 }
 
