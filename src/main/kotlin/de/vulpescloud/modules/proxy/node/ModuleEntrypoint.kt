@@ -1,43 +1,46 @@
 package de.vulpescloud.modules.proxy.node
 
-import de.vulpescloud.api.module.VulpesModule
+import build.buf.gen.vulpescloud.virtualconfig.v1.createVirtualConfigRequest
 import de.vulpescloud.api.virtualconfig.VirtualConfig
-import de.vulpescloud.api.virtualconfig.VirtualConfigProvider
+import de.vulpescloud.modules.proxy.common.config.ProxyModuleConfig
 import de.vulpescloud.modules.proxy.node.commands.ProxyCommand
-import de.vulpescloud.node.VulpesNode
+import de.vulpescloud.node.Node
+import de.vulpescloud.node.modules.VulpesModule
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.TimeUnit
 
 class ModuleEntrypoint : VulpesModule {
-    private lateinit var config: VirtualConfig
 
-    override fun onDisable() {
-        config.close()
-    }
+    override fun onDisable() {}
+
+    override fun onLoad() {}
+
+    override fun onUnload() {}
 
     override fun onEnable() {
-        config = VirtualConfigProvider.getConfig("Proxy-Module", "The Configuration for the Proxy Module!")
+        runBlocking {
+            Node.instance.localGrpcClient.virtualConfigAPI.createVirtualConfig(
+                createVirtualConfigRequest {
+                    this.name = "module_proxy"
+                    this.config = Node.instance.virtualConfigProvider.json.encodeToString(
+                        ProxyModuleConfig.serializer(),
+                        ProxyModuleConfig()
+                    )
+                }
+            )
 
-        config.getEntry("motd.enabled", true)
-        config.getEntry(
-            "motd.firstLine",
-            "<blue>A <color:#ff6600>VulpesCloud</color> hosted Network!</blue>",
-        )
-        config.getEntry("motd.secondLine", "<color:#ff6600>Proxy: %proxy%</color>")
-        config.getEntry("maintenance.active", false)
-        config.getEntry(
-            "maintenance.firstLine",
-            "<blue>A <color:#ff6600>VulpesCloud</color> hosted Network!</blue>",
-        )
-        config.getEntry("maintenance.secondLine", "<red>MAINTENANCE</red>")
-        config.getEntry(
-            "maintenance.kickMessage",
-            "<gray>The Network is currently in <red>maintenance</red>!</gray>",
-        )
-        config.getEntry("maintenance.bypassPermission", "vulpescloud.proxy.maintenance.bypass")
+            Node.instance.commandProvider.register(ProxyCommand(this@ModuleEntrypoint))
+        }
+    }
 
-        config.getEntry("proxy.fullKickMessage", "<red>Proxy is full!</red>")
-
-        config.publish()
-
-        VulpesNode.commandProvider.register(ProxyCommand(config))
+    fun getConfig(): ProxyModuleConfig {
+        return CompletableFuture.supplyAsync {
+                runBlocking {
+                    Node.instance.virtualConfigProvider.getCustomConfigObject("module_proxy")
+                        ?: throw Exception("Config is null!")
+                }
+            }
+            .get(5, TimeUnit.SECONDS)
     }
 }

@@ -2,32 +2,31 @@ package de.vulpescloud.modules.proxy.velocity.manager
 
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.proxy.ProxyPingEvent
-import de.vulpescloud.bridge.VulpesBridge
+import de.vulpescloud.bridge.BridgeAPI
 import de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
 import net.kyori.adventure.text.minimessage.MiniMessage
 import kotlin.jvm.optionals.getOrNull
 
 class MotdManager {
 
-    private val serviceName = VulpesBridge.getServiceProvider().getLocalService().name
+    private val serviceName =
+        BridgeAPI.getFutureAPI().getServicesAPI().getLocalService().get().let {
+            "${it?.task?.name}-${it?.orderedId}"
+        }
 
     @Subscribe
     fun onProxyPingEvent(event: ProxyPingEvent) {
-        val config = VelocityEntrypoint.instance.config
+        val config = VelocityEntrypoint.getConfig()
 
-        if (
-            config.getEntry("motd.enabled", true) && !config.getEntry("maintenance.active", false)
-        ) {
+        if (config.motd.enabled && !config.maintenance.active) {
             val fistLine =
-                config
-                    .getEntry("motd.firstLine", "")
+                config.motd.firstLine
                     .replace("%proxy%", serviceName)
                     .replace("%playerCount%", "${event.ping.players.getOrNull()?.online ?: 0}")
                     .replace("%playerMax%", "${event.ping.players.getOrNull()?.max ?: 0}")
 
             val secondLine =
-                config
-                    .getEntry("motd.secondLine", "")
+                config.motd.secondLine
                     .replace("%proxy%", serviceName)
                     .replace("%playerCount%", "${event.ping.players.getOrNull()?.online ?: 0}")
                     .replace("%playerMax%", "${event.ping.players.getOrNull()?.max ?: 0}")
@@ -44,17 +43,15 @@ class MotdManager {
                     .description(motd)
 
             event.ping = builder.build()
-        } else if (config.getEntry("maintenance.active", false)) {
+        } else if (config.maintenance.active) {
             val fistLine =
-                config
-                    .getEntry("maintenance.firstLine", "")
+                config.maintenance.firstLine
                     .replace("%proxy%", serviceName)
                     .replace("%playerCount%", "${event.ping.players.getOrNull()?.online ?: 0}")
                     .replace("%playerMax%", "${event.ping.players.getOrNull()?.max ?: 0}")
 
             val secondLine =
-                config
-                    .getEntry("maintenance.secondLine", "")
+                config.maintenance.secondLine
                     .replace("%proxy%", serviceName)
                     .replace("%playerCount%", "${event.ping.players.getOrNull()?.online ?: 0}")
                     .replace("%playerMax%", "${event.ping.players.getOrNull()?.max ?: 0}")
