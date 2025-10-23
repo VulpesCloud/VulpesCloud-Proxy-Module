@@ -1,33 +1,39 @@
 package de.vulpescloud.modules.proxy.node
 
-import de.vulpescloud.api.modules.VulpesModule
+import build.buf.gen.vulpescloud.virtualconfig.v1.createVirtualConfigRequest
+import de.vulpescloud.modules.proxy.common.config.ProxyModuleConfig
 import de.vulpescloud.modules.proxy.node.commands.ProxyCommand
 import de.vulpescloud.node.Node
-import org.json.JSONObject
-import org.slf4j.LoggerFactory
-import java.nio.file.Files
-import java.util.Objects
-import kotlin.io.path.Path
+import de.vulpescloud.node.modules.VulpesModule
+import kotlinx.coroutines.runBlocking
 
 class ModuleEntrypoint : VulpesModule {
-    private val logger = LoggerFactory.getLogger(ModuleEntrypoint::class.java)
 
-    override fun disable() {
-        logger.info("Bye Bye from ProxyModule")
+    override fun onDisable() {}
+
+    override fun onLoad() {}
+
+    override fun onUnload() {}
+
+    override fun onEnable() {
+        runBlocking {
+            Node.instance.localGrpcClient.virtualConfigAPI.createVirtualConfig(
+                createVirtualConfigRequest {
+                    this.name = "module_proxy"
+                    this.config =
+                        Node.instance.virtualConfigProvider.json.encodeToString(
+                            ProxyModuleConfig.serializer(),
+                            ProxyModuleConfig(),
+                        )
+                }
+            )
+
+            Node.instance.commandProvider.register(ProxyCommand(this@ModuleEntrypoint))
+        }
     }
 
-    override fun enable() {
-        if (!Path("modules/VulpesCloud-Proxy-Module/config.json").toFile().exists()) {
-            logger.debug("Copying defualt config")
-            Path("modules/VulpesCloud-Proxy-Module").toFile().mkdirs()
-            Files.copy(
-                Objects.requireNonNull(this::class.java.classLoader.getResourceAsStream("config.json")),
-                Path("modules/VulpesCloud-Proxy-Module/config.json")
-            )
-        }
-
-        Node.instance.commandProvider.register(ProxyCommand(JSONObject(FileManager.configPath.toFile().readText())))
-
-        EventListeners()
+    suspend fun getConfig(): ProxyModuleConfig {
+        return Node.instance.virtualConfigProvider.getCustomConfigObject("module_proxy")
+            ?: throw Exception("Config is null!")
     }
 }

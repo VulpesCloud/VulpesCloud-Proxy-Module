@@ -2,19 +2,35 @@ package de.vulpescloud.modules.proxy.velocity.listener
 
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PostLoginEvent
+import com.velocitypowered.api.proxy.ProxyServer
+import de.vulpescloud.bridge.BridgeAPI
 import de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
 import net.kyori.adventure.text.minimessage.MiniMessage
 
-class PlayerJoinListener {
+class PlayerJoinListener(private val proxyServer: ProxyServer) {
     @Subscribe
     fun onPlayerJoin(event: PostLoginEvent) {
-        val jsonConfig = VelocityEntrypoint.instance.configJson
-        val maintenanceJSON = jsonConfig.getJSONObject("maintenance")
-        if (maintenanceJSON.getBoolean("active")) {
-            if (!event.player.hasPermission(maintenanceJSON.getString("bypassPermission"))) {
-                event.player.disconnect(MiniMessage.miniMessage().deserialize(maintenanceJSON.getString("kickMessage")))
+        val config = VelocityEntrypoint.getConfig()
+        if (config.maintenance.active) {
+            if (!event.player.hasPermission(config.maintenance.bypassPermission)) {
+                event.player.disconnect(
+                    MiniMessage.miniMessage().deserialize(config.maintenance.kickMessage)
+                )
+            }
+        } else {
+            if (
+                proxyServer.playerCount >=
+                    BridgeAPI.getFutureAPI()
+                        .getServicesAPI()
+                        .getLocalService()
+                        .get()!!
+                        .task
+                        .maxPlayers
+            ) {
+                event.player.disconnect(
+                    MiniMessage.miniMessage().deserialize(config.fullKickMessage)
+                )
             }
         }
     }
-
 }

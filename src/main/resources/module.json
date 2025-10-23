@@ -2,7 +2,12 @@
   "name": "VulpesCloud-Proxy-Module",
   "description": "Adds Proxy essentials to VulpesCloud Proxy's",
   "main": "de.vulpescloud.modules.proxy.node.ModuleEntrypoint",
-  "author": "TheCGuy",
+  "authors": ["TheCGuy"],
   "website": "https://vulpescloud.de",
-  "version": "1.0.2"
+  "version": "2.0.0",
+  "headNodeOnly": false,
+  "copyToServices": true,
+  "platforms": [
+    "velocity"
+  ]
 }
