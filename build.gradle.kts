@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.electronwill.night-config:json:3.6.0")
+    implementation("com.electronwill.night-config:json:3.8.3")
     compileOnly("de.vulpescloud:wrapper:3.0.0")
     compileOnly("de.vulpescloud:bridge:3.0.0")
     compileOnly("de.vulpescloud:api:3.0.0")
