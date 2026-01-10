@@ -29,7 +29,7 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-    compileOnly("build.buf.gen:vulpescloud_protospecs_grpc_kotlin:1.5.0.1.20250930184830.3aeb7ae6f9e8")
+    compileOnly("build.buf.gen:vulpescloud_protospecs_grpc_kotlin:1.5.0.1.20260110191719.2594fcc093fc")
 }
 
 kotlin {
