@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.vulpescloud"
-version = "1.1.0"
+version = "2.1.0"
 
 repositories {
     mavenCentral()
@@ -16,10 +16,10 @@ repositories {
 
 dependencies {
     implementation("com.electronwill.night-config:json:3.6.0")
-    compileOnly("de.vulpescloud:wrapper:3.0.0")
-    compileOnly("de.vulpescloud:bridge:3.0.0")
-    compileOnly("de.vulpescloud:api:3.0.0")
-    compileOnly("de.vulpescloud:node:3.0.0")
+    compileOnly("de.vulpescloud:wrapper:3.0.0-beta4")
+    compileOnly("de.vulpescloud:bridge:3.0.0-beta4")
+    compileOnly("de.vulpescloud:api:3.0.0-beta4")
+    compileOnly("de.vulpescloud:node:3.0.0-beta4")
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     compileOnly("org.json:json:20250517")
@@ -29,7 +29,7 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-    compileOnly("build.buf.gen:vulpescloud_protospecs_grpc_kotlin:1.5.0.1.20250930184830.3aeb7ae6f9e8")
+    compileOnly("build.buf.gen:vulpescloud_protospecs_grpc_kotlin:1.5.0.2.20260414175246.6a4bbab8e9d4")
 }
 
 kotlin {
@@ -37,5 +37,5 @@ kotlin {
 }
 
 tasks.shadowJar {
-    archiveFileName.set("Proxy-Module.jar")
+    archiveFileName.set("VulpesCloud-Proxy-Module.jar")
 }

@@ -3,8 +3,8 @@ package de.vulpescloud.modules.proxy.velocity.listener
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PostLoginEvent
 import com.velocitypowered.api.proxy.ProxyServer
-import de.vulpescloud.bridge.BridgeAPI
 import de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
+import kotlinx.coroutines.runBlocking
 import net.kyori.adventure.text.minimessage.MiniMessage
 
 class PlayerJoinListener(private val proxyServer: ProxyServer) {
@@ -20,12 +20,13 @@ class PlayerJoinListener(private val proxyServer: ProxyServer) {
         } else {
             if (
                 proxyServer.playerCount >=
-                    BridgeAPI.getFutureAPI()
-                        .getServicesAPI()
-                        .getLocalService()
-                        .get()!!
-                        .task
-                        .maxPlayers
+                    runBlocking {
+                        VelocityEntrypoint.bridgeAPI
+                            .getServicesAPI()
+                            .getLocalService()!!
+                            .task
+                            .maxPlayers
+                    }
             ) {
                 event.player.disconnect(
                     MiniMessage.miniMessage().deserialize(config.fullKickMessage)
