@@ -1,12 +1,12 @@
 package de.vulpescloud.modules.proxy.node.commands
 
-import de.vulpescloud.api.events.EventSerializer
-import de.vulpescloud.modules.proxy.common.event.ProxyModuleConfigUpdateEvent
+import build.buf.gen.vulpescloud.node.v1.SoftwareType
+import build.buf.gen.vulpescloud.services.v1.getAllServicesRequest
+import build.buf.gen.vulpescloud.services.v1.sendCommandRequest
 import de.vulpescloud.modules.proxy.node.ModuleEntrypoint
 import de.vulpescloud.node.Node
 import de.vulpescloud.node.NodeCoroutineScope
 import de.vulpescloud.node.command.CommandSource
-import de.vulpescloud.node.event.EventsService
 import kotlinx.coroutines.launch
 import org.incendo.cloud.annotations.Argument
 import org.incendo.cloud.annotations.Command
@@ -146,10 +146,18 @@ class ProxyCommand(private val module: ModuleEntrypoint) {
         source.sendMessage("Config reloaded")
     }
 
-    private fun notifyServices() {
-        EventsService.publish(
-            EventSerializer.encode(ProxyModuleConfigUpdateEvent(System.currentTimeMillis())),
-            true,
-        )
+    private suspend fun notifyServices() {
+        Node.instance.localGrpcClient.serviceAPI
+            .getAllServices(getAllServicesRequest {})
+            .servicesList
+            .filter { it.task.serverSoftware.type == SoftwareType.SOFTWARE_TYPE_PROXY }
+            .forEach {
+                Node.instance.localGrpcClient.serviceAPI.sendCommand(
+                    sendCommandRequest {
+                        this.service = it
+                        this.command = "vulpescloud-proxy reload"
+                    }
+                )
+            }
     }
 }

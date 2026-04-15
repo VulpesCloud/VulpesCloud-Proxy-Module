@@ -2,17 +2,16 @@ package de.vulpescloud.modules.proxy.velocity.manager
 
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.proxy.ProxyPingEvent
-import de.vulpescloud.bridge.BridgeAPI
 import de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
-import net.kyori.adventure.text.minimessage.MiniMessage
 import kotlin.jvm.optionals.getOrNull
+import kotlinx.coroutines.runBlocking
+import net.kyori.adventure.text.minimessage.MiniMessage
 
 class MotdManager {
 
-    private val serviceName =
-        BridgeAPI.getFutureAPI().getServicesAPI().getLocalService().get().let {
-            "${it?.task?.name}-${it?.orderedId}"
-        }
+    private val serviceName = runBlocking {
+        VelocityEntrypoint.bridgeAPI.getServicesAPI().getLocalService()!!.name()
+    }
 
     @Subscribe
     fun onProxyPingEvent(event: ProxyPingEvent) {
