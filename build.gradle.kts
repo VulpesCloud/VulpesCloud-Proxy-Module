@@ -19,7 +19,7 @@ dependencies {
     compileOnly("de.vulpescloud:wrapper:3.0.0-beta4")
     compileOnly("de.vulpescloud:bridge:3.0.0-beta4")
     compileOnly("de.vulpescloud:api:3.0.0-beta4")
-    compileOnly("de.vulpescloud:node:3.0.0-beta4")
+    compileOnly("de.vulpescloud:node:3.0.0-beta5")
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     compileOnly("org.json:json:20250517")
