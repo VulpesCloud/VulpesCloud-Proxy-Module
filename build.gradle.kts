@@ -28,7 +28,7 @@ dependencies {
     compileOnly("org.incendo:cloud-kotlin-extensions:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
     compileOnly("build.buf.gen:vulpescloud_protospecs_grpc_kotlin:1.5.0.2.20260414175246.6a4bbab8e9d4")
 }
 
