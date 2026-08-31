@@ -1,8 +1,8 @@
-package de.vulpescloud.modules.proxy.velocity.commands
+package org.vulpesstudios.vulpescloud.modules.proxy.velocity.commands
 
 import com.mojang.brigadier.Command
 import com.velocitypowered.api.command.BrigadierCommand
-import de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
+import org.vulpesstudios.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
 import kotlinx.coroutines.runBlocking
 import net.kyori.adventure.text.minimessage.MiniMessage
 

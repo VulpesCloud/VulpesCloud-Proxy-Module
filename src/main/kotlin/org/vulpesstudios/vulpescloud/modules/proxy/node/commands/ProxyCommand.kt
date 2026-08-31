@@ -1,12 +1,12 @@
-package de.vulpescloud.modules.proxy.node.commands
+package org.vulpesstudios.vulpescloud.modules.proxy.node.commands
 
 import build.buf.gen.vulpescloud.node.v1.SoftwareType
 import build.buf.gen.vulpescloud.services.v1.getAllServicesRequest
 import build.buf.gen.vulpescloud.services.v1.sendCommandRequest
-import de.vulpescloud.modules.proxy.node.ModuleEntrypoint
-import de.vulpescloud.node.Node
-import de.vulpescloud.node.NodeCoroutineScope
-import de.vulpescloud.node.command.CommandSource
+import org.vulpesstudios.vulpescloud.modules.proxy.node.ModuleEntrypoint
+import org.vulpesstudios.vulpescloud.node.Node
+import org.vulpesstudios.vulpescloud.node.NodeCoroutineScope
+import org.vulpesstudios.vulpescloud.node.command.CommandSource
 import kotlinx.coroutines.launch
 import org.incendo.cloud.annotations.Argument
 import org.incendo.cloud.annotations.Command

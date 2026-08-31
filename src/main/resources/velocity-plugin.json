@@ -5,5 +5,5 @@
   "authors": [
     "TheCGuy"
   ],
-  "main": "de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint"
+  "main": "org.vulpesstudios.vulpescloud.modules.proxy.velocity.VelocityEntrypoint"
 }

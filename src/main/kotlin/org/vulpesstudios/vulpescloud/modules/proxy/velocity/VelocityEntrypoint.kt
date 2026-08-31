@@ -1,4 +1,4 @@
-package de.vulpescloud.modules.proxy.velocity
+package org.vulpesstudios.vulpescloud.modules.proxy.velocity
 
 import com.velocitypowered.api.event.EventManager
 import com.velocitypowered.api.event.Subscribe
@@ -7,11 +7,11 @@ import com.velocitypowered.api.event.proxy.ProxyShutdownEvent
 import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.PluginContainer
 import com.velocitypowered.api.proxy.ProxyServer
-import de.vulpescloud.bridge.BridgeAPI
-import de.vulpescloud.modules.proxy.common.config.ProxyModuleConfig
-import de.vulpescloud.modules.proxy.velocity.commands.VulpesCloudProxyCommand
-import de.vulpescloud.modules.proxy.velocity.listener.PlayerJoinListener
-import de.vulpescloud.modules.proxy.velocity.manager.MotdManager
+import org.vulpesstudios.vulpescloud.bridge.BridgeAPI
+import org.vulpesstudios.vulpescloud.modules.proxy.common.config.ProxyModuleConfig
+import org.vulpesstudios.vulpescloud.modules.proxy.velocity.commands.VulpesCloudProxyCommand
+import org.vulpesstudios.vulpescloud.modules.proxy.velocity.listener.PlayerJoinListener
+import org.vulpesstudios.vulpescloud.modules.proxy.velocity.manager.MotdManager
 import jakarta.inject.Inject
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
