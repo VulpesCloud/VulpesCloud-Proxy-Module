@@ -1,9 +1,9 @@
-package de.vulpescloud.modules.proxy.velocity.listener
+package org.vulpesstudios.vulpescloud.modules.proxy.velocity.listener
 
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PostLoginEvent
 import com.velocitypowered.api.proxy.ProxyServer
-import de.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
+import org.vulpesstudios.vulpescloud.modules.proxy.velocity.VelocityEntrypoint
 import kotlinx.coroutines.runBlocking
 import net.kyori.adventure.text.minimessage.MiniMessage
 

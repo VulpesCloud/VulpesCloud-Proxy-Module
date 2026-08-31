@@ -1,4 +1,4 @@
-package de.vulpescloud.modules.proxy.common.event
+package org.vulpesstudios.vulpescloud.modules.proxy.common.event
 
 import kotlinx.serialization.Serializable
 

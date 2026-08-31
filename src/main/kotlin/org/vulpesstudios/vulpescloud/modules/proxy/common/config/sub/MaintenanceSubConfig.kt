@@ -1,4 +1,4 @@
-package de.vulpescloud.modules.proxy.common.config.sub
+package org.vulpesstudios.vulpescloud.modules.proxy.common.config.sub
 
 import kotlinx.serialization.Serializable
 
