@@ -27,7 +27,7 @@ dependencies {
     compileOnly("org.json:json:20250517")
     compileOnly("org.incendo:cloud-core:2.0.0")
     compileOnly("org.incendo:cloud-annotations:2.0.0")
-    compileOnly("org.incendo:cloud-kotlin-extensions:2.0.0")
+    compileOnly("org.incendo:cloud-kotlin-extensions:2.1.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines:2.0.0")
     compileOnly("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
