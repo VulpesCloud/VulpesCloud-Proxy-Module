@@ -19,7 +19,7 @@ dependencies {
     implementation("com.electronwill.night-config:json:3.9.0")
     compileOnly("org.vulpesstudios.vulpescloud:wrapper:3.0.0-beta7")
     compileOnly("org.vulpesstudios.vulpescloud:bridge:3.0.0-beta7")
-    compileOnly("org.vulpesstudios.vulpescloud:api:3.0.0-beta7")
+    compileOnly("org.vulpesstudios.vulpescloud:api:3.0.0")
     compileOnly("org.vulpesstudios.vulpescloud:node:3.0.0-beta7")
     compileOnly("com.velocitypowered:velocity-api:3.5.1")
     annotationProcessor("com.velocitypowered:velocity-api:3.5.1")
